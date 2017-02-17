@@ -17,7 +17,7 @@ public class HashKeyGenerator {
         String concatenatedRequest = "appid=" + appId + "&"
                 + "ip=" + ip + "&"
                 + "locale=" + locale + "&"
-                + "offer_type=" + offer_type + "&"
+                + "offer_types=" + offer_type + "&"
                 + "timestamp=" + timestamp + "&"
                 + "uid=" + uId + "&"
                 + token;
