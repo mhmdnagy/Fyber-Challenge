@@ -36,4 +36,34 @@ public class OffersRepository implements OffersDataSource {
                                                 String timestamp, String uId, String token) {
         return remoteDataSource.getOffers(appId, ip, locale, offer_type, timestamp, uId, token);
     }
+
+    @Override
+    public void setUserId(String userId) {
+        localDataSource.setUserId(userId);
+    }
+
+    @Override
+    public String getUserId() {
+        return localDataSource.getUserId();
+    }
+
+    @Override
+    public void setAppId(String appId) {
+        localDataSource.setAppId(appId);
+    }
+
+    @Override
+    public String getAppId() {
+        return localDataSource.getAppId();
+    }
+
+    @Override
+    public void setSecurityToken(String token) {
+        localDataSource.setSecurityToken(token);
+    }
+
+    @Override
+    public String getSecurityToken() {
+        return localDataSource.getSecurityToken();
+    }
 }

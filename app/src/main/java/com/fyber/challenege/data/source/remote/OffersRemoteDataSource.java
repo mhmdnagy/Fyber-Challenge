@@ -28,5 +28,35 @@ public class OffersRemoteDataSource implements OffersDataSource {
 
         return RestClient.get().offers(appId, uId, ip, locale, offer_type, timestamp, hashKey);
     }
+
+    @Override
+    public void setUserId(String userId) {
+
+    }
+
+    @Override
+    public String getUserId() {
+        return null;
+    }
+
+    @Override
+    public void setAppId(String appId) {
+
+    }
+
+    @Override
+    public String getAppId() {
+        return null;
+    }
+
+    @Override
+    public void setSecurityToken(String token) {
+
+    }
+
+    @Override
+    public String getSecurityToken() {
+        return null;
+    }
 }
 
