@@ -2,15 +2,21 @@ package com.fyber.challenege.offerslist;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.fyber.challenege.R;
 import com.fyber.challenege.data.Offer;
+import com.fyber.challenege.data.source.OffersRepository;
+import com.fyber.challenege.data.source.local.OffersLocalDataSource;
+import com.fyber.challenege.data.source.remote.OffersRemoteDataSource;
+import com.fyber.challenege.utils.schedulers.SchedulerProvider;
 
 import java.util.List;
 
@@ -21,7 +27,10 @@ import static com.fyber.challenege.offerslist.OffersContract.Presenter;
  */
 public class OffersFragment extends Fragment implements OffersContract.View {
 
+    //UI
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+
     private Presenter presenter;
 
     /**
@@ -41,9 +50,11 @@ public class OffersFragment extends Fragment implements OffersContract.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-
-        }
+        if (presenter == null)
+            new OffersPresenter(OffersRepository.getInstance(OffersLocalDataSource.getInstance(),
+                    OffersRemoteDataSource.getInstance()),
+                    SchedulerProvider.getInstance(),
+                    this);
     }
 
     @Override
@@ -51,10 +62,9 @@ public class OffersFragment extends Fragment implements OffersContract.View {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_offers, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            recyclerView = (RecyclerView) view;
-        }
+        recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
+
         return view;
     }
 
@@ -62,14 +72,44 @@ public class OffersFragment extends Fragment implements OffersContract.View {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        presenter.getOffers("2070", "109.235.143.113", "de", "112",
-                System.currentTimeMillis() / 1000L + "", "spiderman",
-                "1c915e3b5d42d05136185030892fbb846c278927");
+        presenter.getOffers("109.235.143.113", "de", "112", System.currentTimeMillis() / 1000L + "");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.subscribe();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.unsubscribe();
     }
 
     @Override
     public void showProgress(boolean show) {
+        if (show) {
+            progressBar.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+    }
 
+    @Override
+    public void showError(String message) {
+        Snackbar snackbar = Snackbar.make(getView(), message, Snackbar.LENGTH_LONG)
+                .setAction(R.string.action_try_again, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        presenter.getOffers("109.235.143.113", "de", "112",
+                                System.currentTimeMillis() / 1000L + "");
+                    }
+                });
+
+        snackbar.show();
     }
 
     @Override

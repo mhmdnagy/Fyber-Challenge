@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Fyber Challenge</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_application_id">Application ID</string>
+    <string name="hint_user_id">User ID</string>
+    <string name="hint_security_token">Security Token</string>
+    <string name="action_submit">Submit</string>
+    <string name="error_enter_security_token">Enter Security token</string>
+    <string name="error_enter_user_id">Enter User ID</string>
+    <string name="error_enter_app_id">Enter Application ID</string>
+    <string name="action_try_again">Try Again</string>
 </resources>

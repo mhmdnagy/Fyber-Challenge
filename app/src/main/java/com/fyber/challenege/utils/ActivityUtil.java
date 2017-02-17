@@ -27,4 +27,13 @@ public class ActivityUtil {
         transaction.commit();
     }
 
+    public static void addFirstFragmentToActivity(@NonNull FragmentManager fragmentManager,
+                                                  @NonNull Fragment fragment, int frameId) {
+        checkNotNull(fragmentManager);
+        checkNotNull(fragment);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(frameId, fragment);
+        transaction.commit();
+    }
+
 }

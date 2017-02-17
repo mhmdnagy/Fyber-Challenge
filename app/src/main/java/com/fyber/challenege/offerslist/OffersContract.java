@@ -13,8 +13,7 @@ import java.util.List;
 public interface OffersContract {
 
     interface Presenter extends BasePresenter {
-        void getOffers(String appId, String ip, String locale, String offer_type, String timestamp,
-                          String uId, String token);
+        void getOffers(String ip, String locale, String offer_type, String timestamp);
 
         boolean isEmpty();
     }
@@ -22,6 +21,8 @@ public interface OffersContract {
     interface View extends BaseView<Presenter> {
 
         void showProgress(boolean show);
+
+        void showError(String message);
 
         void showOffers(List<Offer> offers);
 

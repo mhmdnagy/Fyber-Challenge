@@ -5,11 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fyber.challenege.R;
 import com.fyber.challenege.data.Offer;
+import com.fyber.challenege.utils.CircularImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,14 +50,14 @@ public class OffersRecyclerViewAdapter extends RecyclerView.Adapter<OffersRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
-        public final ImageView imageView;
+        public final CircularImageView imageView;
         public final TextView titleView;
         public Offer offerItem;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
-            imageView = (ImageView) view.findViewById(R.id.offer_img);
+            imageView = (CircularImageView) view.findViewById(R.id.offer_img);
             titleView = (TextView) view.findViewById(R.id.offer_title);
         }
     }
