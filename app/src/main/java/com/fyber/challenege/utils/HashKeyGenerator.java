@@ -1,7 +1,5 @@
 package com.fyber.challenege.utils;
 
-import android.util.Log;
-
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +20,12 @@ public class HashKeyGenerator {
                 + "uid=" + uId + "&"
                 + token;
 
-        Log.d("concatenatedRequest", concatenatedRequest);
+        return getHash(concatenatedRequest);
+    }
+
+    public static String generate(String response, String token) {
+        String concatenatedRequest = response
+                + token;
 
         return getHash(concatenatedRequest);
     }
@@ -40,21 +43,6 @@ public class HashKeyGenerator {
             e1.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-        }
-        return convertToHex(input);
-    }
-
-    public static String getHash(byte[] data) {
-        MessageDigest digest = null;
-        byte[] input = null;
-
-        try {
-            digest = MessageDigest.getInstance("SHA-1");
-            digest.reset();
-            input = digest.digest(data);
-
-        } catch (NoSuchAlgorithmException e1) {
-            e1.printStackTrace();
         }
         return convertToHex(input);
     }

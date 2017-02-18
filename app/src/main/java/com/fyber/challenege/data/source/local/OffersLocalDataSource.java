@@ -1,8 +1,9 @@
 package com.fyber.challenege.data.source.local;
 
-import com.fyber.challenege.data.OffersResponse;
 import com.fyber.challenege.data.source.OffersDataSource;
 
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import rx.Observable;
 
 /**
@@ -24,9 +25,8 @@ public class OffersLocalDataSource implements OffersDataSource {
     private OffersLocalDataSource() {
     }
 
-
     @Override
-    public Observable<OffersResponse> getOffers(String appId, String ip, String locale, String offer_type, String timestamp, String uId, String token) {
+    public Observable<Response<ResponseBody>> getOffers(String appId, String ip, String locale, String offer_type, String timestamp, String uId, String token) {
         return null;
     }
 

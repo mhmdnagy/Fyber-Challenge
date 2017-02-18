@@ -2,10 +2,11 @@ package com.fyber.challenege.data.source;
 
 import android.support.annotation.NonNull;
 
-import com.fyber.challenege.data.OffersResponse;
 import com.fyber.challenege.data.source.local.OffersLocalDataSource;
 import com.fyber.challenege.data.source.remote.OffersRemoteDataSource;
 
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import rx.Observable;
 
 /**
@@ -32,8 +33,8 @@ public class OffersRepository implements OffersDataSource {
     }
 
     @Override
-    public Observable<OffersResponse> getOffers(String appId, String ip, String locale, String offer_type,
-                                                String timestamp, String uId, String token) {
+    public Observable<Response<ResponseBody>> getOffers(String appId, String ip, String locale, String offer_type,
+                                                        String timestamp, String uId, String token) {
         return remoteDataSource.getOffers(appId, ip, locale, offer_type, timestamp, uId, token);
     }
 

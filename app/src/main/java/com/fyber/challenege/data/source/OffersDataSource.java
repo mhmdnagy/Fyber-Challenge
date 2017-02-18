@@ -1,7 +1,7 @@
 package com.fyber.challenege.data.source;
 
-import com.fyber.challenege.data.OffersResponse;
-
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import rx.Observable;
 
 /**
@@ -9,8 +9,8 @@ import rx.Observable;
  */
 
 public interface OffersDataSource {
-    Observable<OffersResponse> getOffers(String appId, String ip, String locale, String offer_type,
-                                         String timestamp, String uId, String token);
+    Observable<Response<ResponseBody>> getOffers(String appId, String ip, String locale, String offer_type,
+                                                 String timestamp, String uId, String token);
 
     void setUserId(String userId);
 

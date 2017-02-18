@@ -1,12 +1,10 @@
 package com.fyber.challenege;
 
-import com.fyber.challenege.data.OffersResponse;
 import com.fyber.challenege.data.source.OffersRepository;
 import com.fyber.challenege.offerslist.OffersContract;
 import com.fyber.challenege.offerslist.OffersPresenter;
 import com.fyber.challenege.utils.schedulers.BaseSchedulerProvider;
 import com.fyber.challenege.utils.schedulers.ImmediateSchedulerProvider;
-import com.google.gson.Gson;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,6 +12,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import rx.Observable;
 
 import static org.mockito.Mockito.verify;
@@ -25,7 +26,6 @@ import static org.mockito.Mockito.when;
 
 public class OfferListPresenterTest {
 
-    private static OffersResponse offersResponse;
     private static String responseJson = "{\n" +
             " \"code\": \" OK\" ,\n" +
             " \"message\": \"OK\",\n" +
@@ -74,6 +74,9 @@ public class OfferListPresenterTest {
     @Mock
     private OffersContract.View view;
 
+    private Response<ResponseBody> response;
+    private ResponseBody responseBody;
+
     private String appId;
     private String ip;
     private String locale;
@@ -89,8 +92,10 @@ public class OfferListPresenterTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        offersResponse = new Gson().fromJson(responseJson, OffersResponse.class);
         schedulerProvider = new ImmediateSchedulerProvider();
+
+        responseBody = ResponseBody.create(MediaType.parse(responseJson), "");
+        response = Response.success(responseBody);
 
         offersPresenter = new OffersPresenter(offersRepository, schedulerProvider, view);
 
@@ -114,7 +119,7 @@ public class OfferListPresenterTest {
         when(offersRepository.getUserId()).thenReturn(uId);
         when(offersRepository.getSecurityToken()).thenReturn(token);
         when(offersRepository.getOffers(appId, ip, locale, offers_type, timestamp, uId, token))
-                .thenReturn(Observable.just(offersResponse));
+                .thenReturn(Observable.just(response));
 
         offersPresenter.getOffers(ip, locale, offers_type, timestamp);
 
@@ -122,13 +127,13 @@ public class OfferListPresenterTest {
     }
 
     @Test
-    public void loadOffersErrorTest(){
+    public void loadOffersErrorTest() {
         when(offersRepository.getAppId()).thenReturn(appId);
         when(offersRepository.getUserId()).thenReturn(uId);
         when(offersRepository.getSecurityToken()).thenReturn(token);
 
         when(offersRepository.getOffers(appId, ip, locale, offers_type, timestamp, uId, token))
-                .thenReturn(Observable.<OffersResponse>error(new Exception()));
+                .thenReturn(Observable.<Response<ResponseBody>>error(new Exception()));
 
         offersPresenter.getOffers(ip, locale, offers_type, timestamp);
 

@@ -1,10 +1,11 @@
 package com.fyber.challenege.data.source.remote;
 
-import com.fyber.challenege.data.OffersResponse;
 import com.fyber.challenege.data.source.OffersDataSource;
 import com.fyber.challenege.network.RestClient;
 import com.fyber.challenege.utils.HashKeyGenerator;
 
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import rx.Observable;
 
 /**
@@ -21,8 +22,7 @@ public class OffersRemoteDataSource implements OffersDataSource {
     }
 
     @Override
-    public Observable<OffersResponse> getOffers(String appId, String ip, String locale, String offer_type,
-                                                String timestamp, String uId, String token) {
+    public Observable<Response<ResponseBody>> getOffers(String appId, String ip, String locale, String offer_type, String timestamp, String uId, String token) {
         //generating the hash key
         String hashKey = HashKeyGenerator.generate(appId, ip, locale, offer_type, timestamp, uId, token);
 
