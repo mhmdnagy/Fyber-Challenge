@@ -104,8 +104,7 @@ public class OffersFragment extends Fragment implements OffersContract.View {
                 .setAction(R.string.action_try_again, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        presenter.getOffers("109.235.143.113", "de", "112",
-                                System.currentTimeMillis() / 1000L + "");
+                        getActivity().onBackPressed();
                     }
                 });
 
