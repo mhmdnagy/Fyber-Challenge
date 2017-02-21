@@ -27,6 +27,9 @@ import static com.fyber.challenege.offerslist.OffersContract.Presenter;
  */
 public class OffersFragment extends Fragment implements OffersContract.View {
 
+    private static String IP = "109.235.143.113";
+    private static String LOCALE = "de";
+    private static String OFFERS_TYPE = "112";
     //UI
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -72,7 +75,7 @@ public class OffersFragment extends Fragment implements OffersContract.View {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        presenter.getOffers("109.235.143.113", "de", "112", System.currentTimeMillis() / 1000L + "");
+        presenter.getOffers(IP, LOCALE, OFFERS_TYPE, System.currentTimeMillis() / 1000L + "");
     }
 
     @Override
